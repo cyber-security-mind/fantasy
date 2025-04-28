@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>??????</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+  <div class="container">
+    <h1 id="title">Fantasy web <span>site</span></h1>
+    <h2>Привіт! Вітаю на сайті :)</h2>
+    <p class="mobile-p" >натисни на картку, щоб перейти на обрану сторінку</p>
+    <div class="cards" id="cards">
+      <div class="card">Картка 1</div>
+      <div class="card">Картка 2</div>
+      <div class="card">Картка 3</div>
+      <div class="card">Картка 4</div>
+    </div>
+
+    <p class="laptop-p">( натисни на картку, щоб перейти на обрану сторінку )</p>
+
+  </div>
+      
+  <script>
+        const title = document.getElementById('title');
+        const cards = document.getElementById('cards');
+      
+        window.addEventListener('load', () => {
+          setTimeout(() => {
+            title.classList.add('show');
+      
+            setTimeout(() => {
+              title.classList.add('sticky');
+      
+              setTimeout(() => {
+                cards.classList.add('show');
+              }, 1000);
+            }, 2000);
+          }, 500);
+        });
+  </script>
+
+ <button onclick="toggleTheme()">Змінити тему</button>
+ <span class="theme-status" id="theme-status">🌞 Світла</span>
+
+ <script>
+  function setTheme(theme) {
+    if (theme === 'dark') {
+      document.body.classList.add('dark');
+      updateStatus('dark');
+    } else {
+      document.body.classList.remove('dark');
+      updateStatus('light');
+    }
+  }
+
+  function toggleTheme() {
+    const isDark = document.body.classList.toggle('dark');
+    const newTheme = isDark ? 'dark' : 'light';
+    localStorage.setItem('theme', newTheme);
+    updateStatus(newTheme);
+  }
+
+  function updateStatus(theme) {
+    const status = document.getElementById('theme-status');
+    if (theme === 'dark') {
+      status.textContent = '🌙 Темна';
+    } else {
+      status.textContent = '🌞 Світла';
+    }
+  }
+
+  // При завантаженні сторінки:
+  (function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    }
+  })();
+ </script>
+
+</body>
+</html>
